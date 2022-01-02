@@ -14,7 +14,7 @@ import java.sql.*;
 public abstract class feedback implements ActionListener {
 	
 	JFrame frame;
-	JLabel textL = new JLabel("CUSTOMER FEEDBACK FORM !");
+	JLabel textL = new JLabel("FEEDBACK FORM !");
 	JLabel feedbackL = new JLabel("1.This Feedback is a:");
 	JLabel visitL = new JLabel("3.Best Option To Provide Service?");
 	JLabel paymentL = new JLabel("4.Best Option Payment Method?"); 
@@ -30,13 +30,13 @@ public abstract class feedback implements ActionListener {
 	JButton submitBtn = new JButton ("Submit");
 	
 	List<String> AgeChoices = new ArrayList<String>();
+	List<String> visitCB = new ArrayList<String>();
 	
-	String[] visitCB = {"Online Website", "Walk In to Store"};
 	String[] paymentOpt = {"Debit/Credit", "Cash", "EWallet Payment"};
 	
 	
 	JComboBox<String> comboAge =  new JComboBox<>();
-	JComboBox<String> comboVisit = new JComboBox<>(visitCB);
+	JComboBox<String> comboVisit = new JComboBox<>();
 	JComboBox<String> comboPayment =  new JComboBox<>(paymentOpt);
 	
 	
@@ -58,6 +58,9 @@ public abstract class feedback implements ActionListener {
 		AgeChoices.add("Suggestion");
 		AgeChoices.add("Complaint");
 		comboAge = new JComboBox(AgeChoices.toArray());
+		visitCB.add("Online Website");
+		visitCB.add("Walk In To Store");
+		comboVisit = new JComboBox(visitCB.toArray());
 		
 	}
 	
@@ -80,7 +83,7 @@ public abstract class feedback implements ActionListener {
 	public void setFeedbackLocationAndSize()
 	{
 		
-		textL.setBounds(135,20,300,30);
+		textL.setBounds(145,20,300,30);
 		visitL.setBounds(50,160,300,30);
 		comboVisit.setBounds(50,190,300,20);
 		
