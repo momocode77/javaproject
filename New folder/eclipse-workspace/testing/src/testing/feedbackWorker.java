@@ -124,39 +124,7 @@ public void actionPerformed(ActionEvent e) {
 		
 		if (e.getActionCommand().equals("Submit"))
     	{
-			boolean isID = false;
-			boolean isCom = false;
-			while(!isID) {			
-				 
-					
-					if(!fIdTF.getText().isEmpty())
-					{
-						
-						isID = true;	
-						break;
-					}
-				
-					if(!isID) {
-						JOptionPane.showMessageDialog(null, "Please Enter ID", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
-						break;
-					}
-					
-				
-			}
 			
-			while(!isCom) {
-				if(!fIdTF.getText().isEmpty())
-				{
-					
-					isCom = true;	
-					break;
-				}
-			
-				if(!isCom) {
-					JOptionPane.showMessageDialog(null, "Please Enter Comment", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
-					break;
-				}
-			}
     		try 
     		{
     			Connection myConn = null;
@@ -194,13 +162,29 @@ public void actionPerformed(ActionEvent e) {
 				myStmt.setString(7, checkpb);
 				myStmt.setString(8, comTF.getText());
 				
-				myStmt.executeUpdate();
+				boolean isID = false;
 				
-				JOptionPane.showMessageDialog(null, "Thank For Your Feedback");
 				
-				voucherReward j1 = new voucherReward();
-				j1.show();
-				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+				while(!isID) {
+							
+						if(!fIdTF.getText().isEmpty())
+						{
+							
+							isID = true;	
+							fIdTF.getText().isEmpty();
+							myStmt.executeUpdate();
+							
+							JOptionPane.showMessageDialog(null, "Thank For Your Feedback");
+							frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+							voucher j2 = new voucher();
+							j2.show();
+						}
+						if(!isID) {
+							JOptionPane.showMessageDialog(null, "Please Enter ID", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
+							break;
+						}
+					
+				}
 				
     			
     		}catch (SQLException e2) {
