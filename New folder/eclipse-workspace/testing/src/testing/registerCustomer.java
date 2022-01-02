@@ -5,51 +5,48 @@ import java.awt.event.*;
 import java.awt.*;
 import java.sql.*;
 
-public class registerCustomer extends registerForm implements ActionListener{
+public class registerWorker extends registerForm implements ActionListener{
 	
-	JLabel membershipL = new JLabel("Membership ID:");
-	JLabel addressL = new JLabel("Address:");
+	JLabel fL = new JLabel("Staff ID:");
+	JLabel deptL = new JLabel("Department:");
 	
-	JTextField membershipTF = new JTextField();
-	JTextField addressTF = new JTextField("");
-	JTextField rolesTF = new JTextField("customer");
+	JTextField fTF = new JTextField();
+	JTextField deptTF = new JTextField();
+	JTextField rolesTF = new JTextField("staff");
 	
 	
-	public registerCustomer()
+	public registerWorker()
 	{
 		super();
-		setCustLocation();
-		addCustCTF();
-		actionCustEv();
-		 
+		setLocation();
+		addCTF();
+		actionEv();
+		
 	}
 	
-	public void setCustLocation()
+	public void setLocation()
 	{
 		
 		setLocationAndSize();
 		addComponentsToFrame();
 	}
 	
-	public void addCustCTF()
+	public void addCTF()
 	{
 		
-		membershipL.setBounds(100,288,200,50);
-		addressL.setBounds(100,315,200,50);
+		fL.setBounds(100,288,200,50);
+		deptL.setBounds(100,315,200,50);
 		
-		membershipTF.setBounds(230,303,165,23);
-		addressTF.setBounds(230,335,165,23);
-		
-		rolesTF.setBounds(200,330,165,23);
+		fTF.setBounds(230,303,165,23);
+		deptTF.setBounds(230,335,165,23);
 	}
 	
-	public void actionCustEv()
+	public void actionEv()
 	{
-		frame.add(membershipL);
-		frame.add(addressL);
-		frame.add(membershipTF);
-		frame.add(addressTF);
-		
+		frame.add(fL);
+		frame.add(deptL);
+		frame.add(fTF);
+		frame.add(deptTF);
 	}
 	
 	
@@ -64,12 +61,10 @@ public class registerCustomer extends registerForm implements ActionListener{
 				
 				myConn = DriverManager.getConnection("jdbc:mysql://localhost/smfs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
 				
-				String sql = "insert into register " + " (first_name, last_name, userName, userPassword, noPhone, gender, userID, address, roles)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				String sql = "insert into register " + " (first_name, last_name, userName, userPassword, noPhone, gender, userID, department, roles)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				
-						
+				
 				myStmt = myConn.prepareStatement(sql);
-				
-				 
 			
 				// set param values
 				myStmt.setString(1, firstNameTextField.getText());
@@ -78,49 +73,54 @@ public class registerCustomer extends registerForm implements ActionListener{
 				myStmt.setString(4, passwordField.getText());
 				myStmt.setString(5, noPhoneTF.getText());
 				myStmt.setString(6, userGenTF.getText());
-				myStmt.setString(7, membershipTF.getText());
-				myStmt.setString(8, addressTF.getText());
+				myStmt.setString(7, fTF.getText());
+				myStmt.setString(8, deptTF.getText());
 				myStmt.setString(9, rolesTF.getText());
 				
 				
-					try
-					{
-						boolean equalsIgnoreCase = passwordField.getText().equalsIgnoreCase(confirmPasswordField.getText());
-						myStmt.executeUpdate();
-						JOptionPane.showMessageDialog(null,"Data Registered Successfully", "Login Succesfull", 1);
-						
-					}
-					catch(Exception z)
-					{
-						JOptionPane.showMessageDialog(null, "Password Not Match!", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
-					}
+				try
+				{
+					boolean equalsIgnoreCase = passwordField.getText().equalsIgnoreCase(confirmPasswordField.getText());
+					myStmt.executeUpdate();
+					JOptionPane.showMessageDialog(null,"Data Registered Successfully");
 					
-				
+				}
+				catch(Exception a)
+				{
+					JOptionPane.showMessageDialog(null, "Password Not Match!", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
+				}
 				
 			}catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		}
-		
+		if(e.getActionCommand().equals("Login Menu"))
+    	{
+    		 	        	 
+    		new userLogin(); 
+    		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+    		         		 
+    	}
 		if(e.getSource()==resetButton)
 		{
+			firstNameTextField.setText("");
+			LastNameTextField.setText("");
+			userNameTextField.setText("");
 			passwordField.setText("");
 			confirmPasswordField.setText("");
+			noPhoneTF.setText("");
+			userGenTF.setText("");
+			fTF.setText("");
+			deptTF.setText("");
+			
 		}
-		if(e.getSource()==loginButton)
-		{
-			new userLogin();
-			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-		 
-		} 
+		
+		
 	}
-		
-		
-	
 	
 	
 	public static void main(String[] args) {
-		new registerCustomer();
+		new registerWorker();
 	}
 
 }
