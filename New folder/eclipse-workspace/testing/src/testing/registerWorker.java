@@ -103,8 +103,16 @@ public class registerWorker extends registerForm implements ActionListener{
     	}
 		if(e.getSource()==resetButton)
 		{
+			firstNameTextField.setText("");
+			LastNameTextField.setText("");
+			userNameTextField.setText("");
 			passwordField.setText("");
 			confirmPasswordField.setText("");
+			noPhoneTF.setText("");
+			userGenTF.setText("");
+			fTF.setText("");
+			deptTF.setText("");
+			
 		}
 		
 		
