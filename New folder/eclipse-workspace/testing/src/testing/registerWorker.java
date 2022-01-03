@@ -10,9 +10,9 @@ public class registerWorker extends registerForm implements ActionListener{
 	JLabel fL = new JLabel("Staff ID:");
 	JLabel deptL = new JLabel("Department:");
 	
-	JTextField fTF = new JTextField();
-	JTextField deptTF = new JTextField();
-	JTextField rolesTF = new JTextField("staff");
+	private JTextField fTF = new JTextField();
+	private JTextField deptTF = new JTextField();
+	private JTextField rolesTF = new JTextField("staff");
 	
 	
 	public registerWorker()
@@ -21,7 +21,7 @@ public class registerWorker extends registerForm implements ActionListener{
 		setLocation();
 		addCTF();
 		actionEv();
-		
+		actEvent();
 	}
 	
 	public void setLocation()
@@ -49,8 +49,37 @@ public class registerWorker extends registerForm implements ActionListener{
 		frame.add(deptTF);
 	}
 	
+	public void actEvent()
+	{
+		actionEvent();
+	}
 	
 	
+	
+	public JTextField getfTF() {
+		return fTF;
+	}
+
+	public void setfTF(JTextField fTF) {
+		this.fTF = fTF;
+	}
+
+	public JTextField getDeptTF() {
+		return deptTF;
+	}
+
+	public void setDeptTF(JTextField deptTF) {
+		this.deptTF = deptTF;
+	}
+
+	public JTextField getRolesTF() {
+		return rolesTF;
+	}
+
+	public void setRolesTF(JTextField rolesTF) {
+		this.rolesTF = rolesTF;
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==registerButton)
 		{
@@ -61,7 +90,7 @@ public class registerWorker extends registerForm implements ActionListener{
 				
 				myConn = DriverManager.getConnection("jdbc:mysql://localhost/smfs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
 				
-				String sql = "insert into register " + " (first_name, last_name, userName, userPassword, noPhone, gender, userID, department, roles)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				String sql = "insert into register " + " (first_name, last_name, userName, userPassword, noPhone, gender, workID, department, roles)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				
 				
 				myStmt = myConn.prepareStatement(sql);
@@ -78,23 +107,42 @@ public class registerWorker extends registerForm implements ActionListener{
 				myStmt.setString(9, rolesTF.getText());
 				
 				
-				try
+				try {
+					
+					if(userNameTextField.getText().isEmpty())
+					{
+						throw new MatchException("Username Not Fill");
+					}
+					if(!passwordField.getText().equalsIgnoreCase(confirmPasswordField.getText()))
+					{
+						throw new MatchException("Password Not Match");
+					}
+					else
+					{
+						myStmt.executeUpdate();
+						JOptionPane.showMessageDialog(null,"Data Registered Successfully", "Login Succesfull", 1);
+					}
+					
+				}	
+				catch(MatchException a)
 				{
-					boolean equalsIgnoreCase = passwordField.getText().equalsIgnoreCase(confirmPasswordField.getText());
-					myStmt.executeUpdate();
-					JOptionPane.showMessageDialog(null,"Data Registered Successfully");
+					if(userNameTextField.getText().isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "Please Fill Username", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
+					}
+					if(!passwordField.getText().equalsIgnoreCase(confirmPasswordField.getText()))
+					{
+						JOptionPane.showMessageDialog(null, "Password Not Same", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
+					}
 					
 				}
-				catch(Exception a)
-				{
-					JOptionPane.showMessageDialog(null, "Password Not Match!", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
-				}
+				
 				
 			}catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		}
-		if(e.getActionCommand().equals("Login Menu"))
+		if(e.getActionCommand().equals("Login"))
     	{
     		 	        	 
     		new userLogin(); 
@@ -103,16 +151,8 @@ public class registerWorker extends registerForm implements ActionListener{
     	}
 		if(e.getSource()==resetButton)
 		{
-			firstNameTextField.setText("");
-			LastNameTextField.setText("");
-			userNameTextField.setText("");
 			passwordField.setText("");
 			confirmPasswordField.setText("");
-			noPhoneTF.setText("");
-			userGenTF.setText("");
-			fTF.setText("");
-			deptTF.setText("");
-			
 		}
 		
 		
