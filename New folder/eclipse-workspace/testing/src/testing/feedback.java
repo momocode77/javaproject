@@ -24,20 +24,20 @@ public abstract class feedback implements ActionListener {
 	
 	
 	
-	JTextField productTF = new JTextField();
-	JTextField comTF = new JTextField();
+	private JTextField productTF = new JTextField();
+	private JTextField comTF = new JTextField();
 	
 	JButton submitBtn = new JButton ("Submit");
 	
-	List<String> AgeChoices = new ArrayList<String>();
-	List<String> visitCB = new ArrayList<String>();
+	private List<String> AgeChoices = new ArrayList<String>();
+	private List<String> visitCB = new ArrayList<String>();
 	
-	String[] paymentOpt = {"Debit/Credit", "Cash", "EWallet Payment"};
+	private String[] paymentOpt = {"Debit/Credit", "Cash", "EWallet Payment"};
 	
 	
-	JComboBox<String> comboAge =  new JComboBox<>();
-	JComboBox<String> comboVisit = new JComboBox<>();
-	JComboBox<String> comboPayment =  new JComboBox<>(paymentOpt);
+	private JComboBox<String> comboAge =  new JComboBox<>();
+	private JComboBox<String> comboVisit = new JComboBox<>();
+	private JComboBox<String> comboPayment =  new JComboBox<>(paymentOpt);
 	
 	
 	
@@ -130,6 +130,70 @@ public abstract class feedback implements ActionListener {
 		
 		frame.add(tyL);
 		frame.add(submitBtn);
+	}
+
+	public JTextField getProductTF() {
+		return productTF;
+	}
+
+	public void setProductTF(JTextField productTF) {
+		this.productTF = productTF;
+	}
+
+	public JTextField getComTF() {
+		return comTF;
+	}
+
+	public void setComTF(JTextField comTF) {
+		this.comTF = comTF;
+	}
+
+	public List<String> getAgeChoices() {
+		return AgeChoices;
+	}
+
+	public void setAgeChoices(List<String> ageChoices) {
+		AgeChoices = ageChoices;
+	}
+
+	public List<String> getVisitCB() {
+		return visitCB;
+	}
+
+	public void setVisitCB(List<String> visitCB) {
+		this.visitCB = visitCB;
+	}
+
+	public String[] getPaymentOpt() {
+		return paymentOpt;
+	}
+
+	public void setPaymentOpt(String[] paymentOpt) {
+		this.paymentOpt = paymentOpt;
+	}
+
+	public JComboBox<String> getComboAge() {
+		return comboAge;
+	}
+
+	public void setComboAge(JComboBox<String> comboAge) {
+		this.comboAge = comboAge;
+	}
+
+	public JComboBox<String> getComboVisit() {
+		return comboVisit;
+	}
+
+	public void setComboVisit(JComboBox<String> comboVisit) {
+		this.comboVisit = comboVisit;
+	}
+
+	public JComboBox<String> getComboPayment() {
+		return comboPayment;
+	}
+
+	public void setComboPayment(JComboBox<String> comboPayment) {
+		this.comboPayment = comboPayment;
 	}
 	
 	 
