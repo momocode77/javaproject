@@ -18,18 +18,18 @@ public class feedbackCustomer extends feedback implements ActionListener{
 	JLabel suggestL = new JLabel("6.Would you recommend our product or service to your friend?");
 	JLabel prodL = new JLabel("7.Would You Use Our Product In The Future?");
 	
-	JTextField fIdTF = new JTextField();
+	private JTextField fIdTF = new JTextField();
 	
-	JCheckBox cb1 = new JCheckBox("Vey Satisfied!");
-	JCheckBox cb2 = new JCheckBox("Normal!");
-	JCheckBox cb3 = new JCheckBox("Not Satisfied!");
+	private JCheckBox cb1 = new JCheckBox("Vey Satisfied!");
+	private JCheckBox cb2 = new JCheckBox("Normal!");
+	private JCheckBox cb3 = new JCheckBox("Not Satisfied!");
 	
-	JCheckBox sb1 = new JCheckBox("Yes");
-	JCheckBox sb2 = new JCheckBox("No");
+	private JCheckBox sb1 = new JCheckBox("Yes");
+	private JCheckBox sb2 = new JCheckBox("No");
 	
-	JCheckBox pb1 = new JCheckBox("Definitely");
-	JCheckBox pb2 = new JCheckBox("Not Sure");
-	JCheckBox pb3 = new JCheckBox("Definitely Not");
+	private JCheckBox pb1 = new JCheckBox("Definitely");
+	private JCheckBox pb2 = new JCheckBox("Not Sure");
+	private JCheckBox pb3 = new JCheckBox("Definitely Not");
 	
 	
 	public feedbackCustomer()
@@ -118,6 +118,80 @@ public class feedbackCustomer extends feedback implements ActionListener{
 		 submitBtn.addActionListener(this);
 	}
 	
+	
+	
+	public JTextField getfIdTF() {
+		return fIdTF;
+	}
+
+	public void setfIdTF(JTextField fIdTF) {
+		this.fIdTF = fIdTF;
+	}
+
+	public JCheckBox getCb1() {
+		return cb1;
+	}
+
+	public void setCb1(JCheckBox cb1) {
+		this.cb1 = cb1;
+	}
+
+	public JCheckBox getCb2() {
+		return cb2;
+	}
+
+	public void setCb2(JCheckBox cb2) {
+		this.cb2 = cb2;
+	}
+
+	public JCheckBox getCb3() {
+		return cb3;
+	}
+
+	public void setCb3(JCheckBox cb3) {
+		this.cb3 = cb3;
+	}
+
+	public JCheckBox getSb1() {
+		return sb1;
+	}
+
+	public void setSb1(JCheckBox sb1) {
+		this.sb1 = sb1;
+	}
+
+	public JCheckBox getSb2() {
+		return sb2;
+	}
+
+	public void setSb2(JCheckBox sb2) {
+		this.sb2 = sb2;
+	}
+
+	public JCheckBox getPb1() {
+		return pb1;
+	}
+
+	public void setPb1(JCheckBox pb1) {
+		this.pb1 = pb1;
+	}
+
+	public JCheckBox getPb2() {
+		return pb2;
+	}
+
+	public void setPb2(JCheckBox pb2) {
+		this.pb2 = pb2;
+	}
+
+	public JCheckBox getPb3() {
+		return pb3;
+	}
+
+	public void setPb3(JCheckBox pb3) {
+		this.pb3 = pb3;
+	}
+
 public void actionPerformed(ActionEvent e) {
 		
 		if (e.getActionCommand().equals("Submit"))
@@ -151,40 +225,44 @@ public void actionPerformed(ActionEvent e) {
     			if(pb3.isSelected()== true)  checkpb = "Definitely Not!";
     			
     			
-    			myStmt.setString(1, comboAge.getSelectedItem().toString());
+    			myStmt.setString(1, getComboAge().getSelectedItem().toString());
     			myStmt.setString(2, fIdTF.getText());
-				myStmt.setString(3, comboVisit.getSelectedItem().toString());
-				myStmt.setString(4, comboPayment.getSelectedItem().toString());
+				myStmt.setString(3, getComboVisit().getSelectedItem().toString());
+				myStmt.setString(4, getComboPayment().getSelectedItem().toString());
 				myStmt.setString(5, checksb);
 				myStmt.setString(6, check);				
 				myStmt.setString(7, checkpb);
-				myStmt.setString(8, comTF.getText());
+				myStmt.setString(8, getComTF().getText());
 				
-				boolean isID = false;			
+			
 				
-				while(!isID) {
-							
-						if(!fIdTF.getText().isEmpty())
-						{
-							
-							isID = true;	
-							fIdTF.getText().isEmpty();
-							myStmt.executeUpdate();
-							
-							JOptionPane.showMessageDialog(null, "Thank For Your Feedback");
-							frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-							voucher j2 = new voucher();
-							j2.show();
-						}
-						if(!isID) {
-							JOptionPane.showMessageDialog(null, "Please Enter ID", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
-							break;
-						}
+				try {
 					
+					if(fIdTF.getText().isEmpty())
+					{
+						throw new MatchException("ID Not Fill");
+					}
+					
+					else
+					{
+						myStmt.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Thank For Your Feedback");
+						frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+						voucherPoint j2 = new voucherPoint();
+						j2.show();
+					}
+					
+				}	
+				catch(MatchException a)
+				{
+					
+						JOptionPane.showMessageDialog(null, "Fill In Your ID", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
+	
 				}
 								
     			
     		}catch (SQLException e2) {
+    			JOptionPane.showMessageDialog(null, "Form Not Complete!", "Invalid TextFields", JOptionPane.ERROR_MESSAGE);
     			e2.printStackTrace();
     		} 		
     		 
